@@ -23,21 +23,21 @@ zuul:
         stripPrefix: false
         sensitiveHeaders:
 
-    account-service:
+    account:
         path: /accounts/**
-        serviceId: account-service
+        serviceId: account
         stripPrefix: false
         sensitiveHeaders:
 
-    statistics-service:
+    statistics:
         path: /statistics/**
-        serviceId: statistics-service
+        serviceId: statistics
         stripPrefix: false
         sensitiveHeaders:
 
-    notification-service:
+    notification:
         path: /notifications/**
-        serviceId: notification-service
+        serviceId: notification
         stripPrefix: false
         sensitiveHeaders:
 
