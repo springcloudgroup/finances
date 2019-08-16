@@ -4,10 +4,13 @@ security:
       clientId: account
       clientSecret: ${ACCOUNT_SERVICE_PASSWORD}
       accessTokenUri: http://auth-service:5000/uaa/oauth/token
-      grant-type: client_credentials
+      #当前springboot和springcloud版本不能有grant-type，不然就会报错：oauth2ClientContext重复定义
+#      grant-type: client_credentials
       scope: server
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver

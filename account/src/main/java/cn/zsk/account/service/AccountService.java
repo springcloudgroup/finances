@@ -3,7 +3,6 @@ package cn.zsk.account.service;
 import cn.zsk.account.entity.AccountEntity;
 import cn.zsk.account.entity.UserEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.undertow.security.idm.Account;
 
 /**
  * @author:zsk
@@ -35,5 +34,5 @@ public interface AccountService extends IService<AccountEntity> {
      * @param name
      * @param update
      */
-    void saveChanges(String name, Account update);
+    void saveChanges(String name, AccountEntity update);
 }

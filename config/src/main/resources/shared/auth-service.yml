@@ -1,13 +1,53 @@
 spring:
-  data:
-    mongodb:
-      host: auth-mongodb
-      username: user
-      password: ${MONGODB_PASSWORD}
-      database: piggymetrics
-      port: 27017
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      connection-init-sqls: set names utf8mb4
+      url: jdbc:mysql://localhost:3306/finances?useSSL=true&verifyServerCertificate=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: admin
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
 
 server:
+  undertow:
+    accesslog:
+      dir: ./log/ # Undertow access log directory.
+      enabled: false # Enable access log.
+      pattern: '%t [%I] %a %r %s (%b Byte) (%T ms)' # Format pattern for access logs.
+      prefix: access_log. # Log file name prefix.
+      rotate: true # Enable access log rotation.
+      suffix: log # Log file name suffix.
+    buffer-size: # Size of each buffer in bytes.
+    buffers-per-region: # Number of buffer per region.
+    direct-buffers: # Allocate buffers outside the Java heap.
+    io-threads: # Number of I/O threads to create for the worker.
+    max-http-post-size: 0 # Maximum size in bytes of the HTTP post content.
+    worker-threads: # Number of worker threads.
   servlet:
     context-path: /uaa
   port: 5000

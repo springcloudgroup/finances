@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class UserEntity implements Serializable {
 
     @TableField("user_name")
-    private String userName;
+    private String username;
 
     @TableField("password")
     private String password;

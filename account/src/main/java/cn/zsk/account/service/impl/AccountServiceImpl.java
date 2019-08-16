@@ -6,7 +6,6 @@ import cn.zsk.account.mapper.AccountMapper;
 import cn.zsk.account.service.AccountService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.undertow.security.idm.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, AccountEntity
     }
 
     @Override
-    public void saveChanges(String name, Account update) {
+    public void saveChanges(String name, AccountEntity update) {
 
     }
 }

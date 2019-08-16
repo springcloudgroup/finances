@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author:zsk
@@ -23,7 +26,10 @@ public class AccountEntity implements Serializable {
     @TableField("last_seen")
     private String lastSeen;
 
-    @TableField("note")
-    private String note;
+    private List<ItemEntity> incomes;
+
+    private List<ItemEntity> expenses;
+
+    private SavingEntity saving;
 
 }

@@ -30,14 +30,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public void create(UserEntity user) {
         Optional<UserEntity> existing = Optional.ofNullable(userMapper.selectById(new QueryWrapper<UserEntity>()
-                .eq("user_name", user.getUserName())));
-        existing.ifPresent(it-> {throw new IllegalArgumentException("user already exists: " + it.getUserName());});
+                .eq("user_name", user.getUsername())));
+        existing.ifPresent(it-> {throw new IllegalArgumentException("user already exists: " + it.getUsername());});
 
         String hash = encoder.encode(user.getPassword());
         user.setPassword(hash);
 
         userMapper.insert(user);
 
-        logger.info("new user has been created: {}", user.getUserName());
+        logger.info("new user has been created: {}", user.getUsername());
     }
 }

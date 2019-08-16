@@ -4,7 +4,7 @@ security:
       clientId: notification
       clientSecret: ${NOTIFICATION_SERVICE_PASSWORD}
       accessTokenUri: http://auth-service:5000/uaa/oauth/token
-      grant-type: client_credentials
+#      grant-type: client_credentials
       scope: server
 
 server:

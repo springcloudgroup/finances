@@ -36,6 +36,18 @@
         <common-api.version>1.0-SNAPSHOT</common-api.version>
     </properties>
 
+    <modules>
+        <module>account</module>
+        <module>auth-service</module>
+        <module>config</module>
+        <module>monitoring</module>
+        <module>registry</module>
+        <module>gateway</module>
+        <module>statistics</module>
+        <module>notification</module>
+        <module>turbine-stream</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -193,24 +205,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    <build>
-        <finalName>SpringCloudDemo</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <delimiters>
-                        <delimiter>$</delimiter>
-                    </delimiters>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

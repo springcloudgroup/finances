@@ -64,7 +64,7 @@ public class MybatisConfig {
         //指明mapper.xml位置(配置文件中指明的xml位置会失效用此方式代替，具体原因未知)
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/**/*.xml"));
         //指明实体扫描(多个package用逗号或者分号分隔)
-        sqlSessionFactory.setTypeAliasesPackage("cn.zsk.account.*.entity");
+        sqlSessionFactory.setTypeAliasesPackage("cn.zsk.authservice.*.entity");
 
         //***导入Mybatis配置***
         MybatisConfiguration configuration = new MybatisConfiguration();
