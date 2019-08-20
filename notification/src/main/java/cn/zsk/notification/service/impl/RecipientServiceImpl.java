@@ -2,6 +2,7 @@ package cn.zsk.notification.service.impl;
 
 import cn.zsk.notification.entity.NotificationType;
 import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.mapper.RecipientMapper;
 import cn.zsk.notification.service.RecipientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class RecipientServiceImpl implements RecipientService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private RecipientRepository repository;
+	private RecipientMapper repository;
 
 	@Override
 	public Recipient findByAccountName(String accountName) {

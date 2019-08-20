@@ -1,7 +1,9 @@
 package cn.zsk.notification.service;
 
-import com.piggymetrics.notification.domain.NotificationType;
-import com.piggymetrics.notification.domain.Recipient;
+
+
+import cn.zsk.notification.entity.NotificationType;
+import cn.zsk.notification.entity.Recipient;
 
 import java.util.List;
 

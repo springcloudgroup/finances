@@ -1,8 +1,11 @@
 package cn.zsk.notification.service.impl;
 
-import com.piggymetrics.notification.client.AccountServiceClient;
-import com.piggymetrics.notification.domain.NotificationType;
-import com.piggymetrics.notification.domain.Recipient;
+import cn.zsk.notification.client.AccountServiceClient;
+import cn.zsk.notification.entity.NotificationType;
+import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.service.EmailService;
+import cn.zsk.notification.service.NotificationService;
+import cn.zsk.notification.service.RecipientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

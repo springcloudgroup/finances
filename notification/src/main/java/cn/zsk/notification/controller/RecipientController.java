@@ -1,7 +1,7 @@
 package cn.zsk.notification.controller;
 
-import com.piggymetrics.notification.domain.Recipient;
-import com.piggymetrics.notification.service.RecipientService;
+import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.service.RecipientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
