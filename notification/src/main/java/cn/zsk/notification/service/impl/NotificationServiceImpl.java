@@ -1,8 +1,8 @@
 package cn.zsk.notification.service.impl;
 
 import cn.zsk.notification.client.AccountServiceClient;
-import cn.zsk.notification.entity.NotificationType;
-import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.entity.NotificationTypeEnum;
+import cn.zsk.notification.entity.RecipientEntity;
 import cn.zsk.notification.service.EmailService;
 import cn.zsk.notification.service.NotificationService;
 import cn.zsk.notification.service.RecipientService;
@@ -21,7 +21,7 @@ public class NotificationServiceImpl implements NotificationService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private AccountServiceClient client;
+	private AccountServiceClient accountServiceClient;
 
 	@Autowired
 	private RecipientService recipientService;
@@ -33,14 +33,14 @@ public class NotificationServiceImpl implements NotificationService {
 	@Scheduled(cron = "${backup.cron}")
 	public void sendBackupNotifications() {
 
-		final NotificationType type = NotificationType.BACKUP;
+		final NotificationTypeEnum type = NotificationTypeEnum.BACKUP;
 
-		List<Recipient> recipients = recipientService.findReadyToNotify(type);
+		List<RecipientEntity> recipients = recipientService.findReadyToNotify(type);
 		log.info("found {} recipients for backup notification", recipients.size());
 
 		recipients.forEach(recipient -> CompletableFuture.runAsync(() -> {
 			try {
-				String attachment = client.getAccount(recipient.getAccountName());
+				String attachment = accountServiceClient.getAccount(recipient.getAccountName());
 				emailService.send(type, recipient, attachment);
 				recipientService.markNotified(type, recipient);
 			} catch (Throwable t) {
@@ -53,9 +53,9 @@ public class NotificationServiceImpl implements NotificationService {
 	@Scheduled(cron = "${remind.cron}")
 	public void sendRemindNotifications() {
 
-		final NotificationType type = NotificationType.REMIND;
+		final NotificationTypeEnum type = NotificationTypeEnum.REMIND;
 
-		List<Recipient> recipients = recipientService.findReadyToNotify(type);
+		List<RecipientEntity> recipients = recipientService.findReadyToNotify(type);
 		log.info("found {} recipients for remind notification", recipients.size());
 
 		recipients.forEach(recipient -> CompletableFuture.runAsync(() -> {

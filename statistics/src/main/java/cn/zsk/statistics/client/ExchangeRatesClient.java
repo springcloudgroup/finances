@@ -1,6 +1,6 @@
 package cn.zsk.statistics.client;
 
-import cn.zsk.statistics.entity.Currency;
+import cn.zsk.statistics.entity.CurrencyEnum;
 import cn.zsk.statistics.entity.ExchangeRatesContainer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,5 +15,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ExchangeRatesClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/latest")
-    ExchangeRatesContainer getRates(@RequestParam("base") Currency base);
+    ExchangeRatesContainer getRates(@RequestParam("base") CurrencyEnum base);
 }

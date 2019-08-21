@@ -1,13 +1,13 @@
 package cn.zsk.notification.service;
 
-import cn.zsk.notification.entity.NotificationType;
-import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.entity.NotificationTypeEnum;
+import cn.zsk.notification.entity.RecipientEntity;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 
 public interface EmailService {
 
-	void send(NotificationType type, Recipient recipient, String attachment) throws MessagingException, IOException;
+	void send(NotificationTypeEnum type, RecipientEntity recipient, String attachment) throws MessagingException, IOException;
 
 }

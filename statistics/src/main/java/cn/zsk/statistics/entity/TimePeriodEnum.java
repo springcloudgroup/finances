@@ -2,13 +2,13 @@ package cn.zsk.statistics.entity;
 
 import java.math.BigDecimal;
 
-public enum TimePeriod {
+public enum TimePeriodEnum {
 
 	YEAR(365.2425), QUARTER(91.3106), MONTH(30.4368), DAY(1), HOUR(0.0416);
 
 	private double baseRatio;
 
-	TimePeriod(double baseRatio) {
+	TimePeriodEnum(double baseRatio) {
 		this.baseRatio = baseRatio;
 	}
 
@@ -16,7 +16,7 @@ public enum TimePeriod {
 		return new BigDecimal(baseRatio);
 	}
 
-	public static TimePeriod getBase() {
+	public static TimePeriodEnum getBase() {
 		return DAY;
 	}
 }

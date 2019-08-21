@@ -1,7 +1,7 @@
 package cn.zsk.statistics.service.impl;
 
 import cn.zsk.statistics.client.ExchangeRatesClient;
-import cn.zsk.statistics.entity.Currency;
+import cn.zsk.statistics.entity.CurrencyEnum;
 import cn.zsk.statistics.entity.ExchangeRatesContainer;
 import cn.zsk.statistics.service.ExchangeRatesService;
 import com.google.common.collect.ImmutableMap;
@@ -30,17 +30,17 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<Currency, BigDecimal> getCurrentRates() {
+	public Map<CurrencyEnum, BigDecimal> getCurrentRates() {
 
 		if (container == null || !container.getDate().equals(LocalDate.now())) {
-			container = client.getRates(Currency.getBase());
+			container = client.getRates(CurrencyEnum.getBase());
 			log.info("exchange rates has been updated: {}", container);
 		}
 
 		return ImmutableMap.of(
-				Currency.EUR, container.getRates().get(Currency.EUR.name()),
-				Currency.RUB, container.getRates().get(Currency.RUB.name()),
-				Currency.USD, BigDecimal.ONE
+				CurrencyEnum.EUR, container.getRates().get(CurrencyEnum.EUR.name()),
+				CurrencyEnum.RUB, container.getRates().get(CurrencyEnum.RUB.name()),
+				CurrencyEnum.USD, BigDecimal.ONE
 		);
 	}
 
@@ -48,11 +48,11 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public BigDecimal convert(Currency from, Currency to, BigDecimal amount) {
+	public BigDecimal convert(CurrencyEnum from, CurrencyEnum to, BigDecimal amount) {
 
 		Assert.notNull(amount);
 
-		Map<Currency, BigDecimal> rates = getCurrentRates();
+		Map<CurrencyEnum, BigDecimal> rates = getCurrentRates();
 		BigDecimal ratio = rates.get(to).divide(rates.get(from), 4, RoundingMode.HALF_UP);
 
 		return amount.multiply(ratio);

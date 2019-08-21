@@ -1,6 +1,6 @@
 package cn.zsk.notification.entity;
 
-public enum NotificationType {
+public enum NotificationTypeEnum {
 
 	BACKUP("backup.email.subject", "backup.email.text", "backup.email.attachment"),
 	REMIND("remind.email.subject", "remind.email.text", null);
@@ -9,7 +9,7 @@ public enum NotificationType {
 	private String text;
 	private String attachment;
 
-	NotificationType(String subject, String text, String attachment) {
+	NotificationTypeEnum(String subject, String text, String attachment) {
 		this.subject = subject;
 		this.text = text;
 		this.attachment = attachment;

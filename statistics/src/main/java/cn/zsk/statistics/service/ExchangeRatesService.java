@@ -1,6 +1,6 @@
 package cn.zsk.statistics.service;
 
-import cn.zsk.statistics.entity.Currency;
+import cn.zsk.statistics.entity.CurrencyEnum;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -13,15 +13,15 @@ public interface ExchangeRatesService {
 	 *
 	 * @return current date rates
 	 */
-	Map<Currency, BigDecimal> getCurrentRates();
+	Map<CurrencyEnum, BigDecimal> getCurrentRates();
 
 	/**
 	 * Converts given amount to specified currency
 	 *
-	 * @param from {@link Currency}
-	 * @param to {@link Currency}
+	 * @param from {@link CurrencyEnum}
+	 * @param to {@link CurrencyEnum}
 	 * @param amount to be converted
 	 * @return converted amount
 	 */
-	BigDecimal convert(Currency from, Currency to, BigDecimal amount);
+	BigDecimal convert(CurrencyEnum from, CurrencyEnum to, BigDecimal amount);
 }

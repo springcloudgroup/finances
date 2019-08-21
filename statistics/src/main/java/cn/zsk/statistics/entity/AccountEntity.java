@@ -1,8 +1,5 @@
 package cn.zsk.statistics.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -21,14 +18,14 @@ public class AccountEntity implements Serializable {
 
     @Valid
     @NotNull
-    private List<Item> incomes;
+    private List<ItemEntity> incomes;
 
     @Valid
     @NotNull
-    private List<Item> expenses;
+    private List<ItemEntity> expenses;
 
     @Valid
     @NotNull
-    private Saving saving;
+    private SavingEntity saving;
 
 }

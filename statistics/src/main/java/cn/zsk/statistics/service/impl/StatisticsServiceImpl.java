@@ -1,9 +1,9 @@
 package cn.zsk.statistics.service.impl;
 
 import cn.zsk.statistics.entity.AccountEntity;
-import cn.zsk.statistics.entity.Currency;
-import cn.zsk.statistics.entity.Item;
-import cn.zsk.statistics.entity.Saving;
+import cn.zsk.statistics.entity.CurrencyEnum;
+import cn.zsk.statistics.entity.ItemEntity;
+import cn.zsk.statistics.entity.SavingEntity;
 import cn.zsk.statistics.entity.timeseries.DataPoint;
 import cn.zsk.statistics.entity.timeseries.DataPointId;
 import cn.zsk.statistics.entity.timeseries.ItemMetric;
@@ -12,7 +12,6 @@ import cn.zsk.statistics.mapper.DataPointMapper;
 import cn.zsk.statistics.service.ExchangeRatesService;
 import cn.zsk.statistics.service.StatisticsService;
 import com.google.common.collect.ImmutableMap;
-import io.undertow.security.idm.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +82,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 		return repository.save(dataPoint);
 	}
 
-	private Map<StatisticMetric, BigDecimal> createStatisticMetrics(Set<ItemMetric> incomes, Set<ItemMetric> expenses, Saving saving) {
+	private Map<StatisticMetric, BigDecimal> createStatisticMetrics(Set<ItemMetric> incomes, Set<ItemMetric> expenses, SavingEntity saving) {
 
-		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), Currency.getBase(), saving.getAmount());
+		BigDecimal savingAmount = ratesService.convert(saving.getCurrency(), CurrencyEnum.getBase(), saving.getAmount());
 
 		BigDecimal expensesAmount = expenses.stream()
 				.map(ItemMetric::getAmount)
@@ -103,13 +102,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	/**
-	 * Normalizes given item amount to {@link Currency#getBase()} currency with
+	 * Normalizes given item amount to {@link CurrencyEnum#getBase()} currency with
 	 * {@link TimePeriod#getBase()} time period
 	 */
-	private ItemMetric createItemMetric(Item item) {
+	private ItemMetric createItemMetric(ItemEntity item) {
 
 		BigDecimal amount = ratesService
-				.convert(item.getCurrency(), Currency.getBase(), item.getAmount())
+				.convert(item.getCurrency(), CurrencyEnum.getBase(), item.getAmount())
 				.divide(item.getPeriod().getBaseRatio(), 4, RoundingMode.HALF_UP);
 
 		return new ItemMetric(item.getTitle(), amount);

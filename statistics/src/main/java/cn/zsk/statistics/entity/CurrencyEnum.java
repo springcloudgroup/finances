@@ -1,10 +1,10 @@
 package cn.zsk.statistics.entity;
 
-public enum Currency {
+public enum CurrencyEnum {
 
 	USD, EUR, RUB;
 
-	public static Currency getBase() {
+	public static CurrencyEnum getBase() {
 		return USD;
 	}
 }

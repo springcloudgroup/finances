@@ -1,7 +1,7 @@
 package cn.zsk.notification.service.impl;
 
-import cn.zsk.notification.entity.NotificationType;
-import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.entity.NotificationTypeEnum;
+import cn.zsk.notification.entity.RecipientEntity;
 import cn.zsk.notification.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
 	private Environment env;
 
 	@Override
-	public void send(NotificationType type, Recipient recipient, String attachment) throws MessagingException, IOException {
+	public void send(NotificationTypeEnum type, RecipientEntity recipient, String attachment) throws MessagingException, IOException {
 
 		final String subject = env.getProperty(type.getSubject());
 		final String text = MessageFormat.format(env.getProperty(type.getText()), recipient.getAccountName());

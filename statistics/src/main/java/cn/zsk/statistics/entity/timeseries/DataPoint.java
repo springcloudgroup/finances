@@ -1,6 +1,6 @@
 package cn.zsk.statistics.entity.timeseries;
 
-import cn.zsk.statistics.entity.Currency;
+import cn.zsk.statistics.entity.CurrencyEnum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,7 +24,7 @@ public class DataPoint {
 
 	private Map<StatisticMetric, BigDecimal> statistics;
 
-	private Map<Currency, BigDecimal> rates;
+	private Map<CurrencyEnum, BigDecimal> rates;
 
 	public DataPointId getId() {
 		return id;
@@ -58,11 +58,11 @@ public class DataPoint {
 		this.statistics = statistics;
 	}
 
-	public Map<Currency, BigDecimal> getRates() {
+	public Map<CurrencyEnum, BigDecimal> getRates() {
 		return rates;
 	}
 
-	public void setRates(Map<Currency, BigDecimal> rates) {
+	public void setRates(Map<CurrencyEnum, BigDecimal> rates) {
 		this.rates = rates;
 	}
 }

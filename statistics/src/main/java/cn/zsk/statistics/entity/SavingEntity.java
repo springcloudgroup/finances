@@ -6,13 +6,13 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
-public class Saving {
+public class SavingEntity {
 
 	@NotNull
 	private BigDecimal amount;
 
 	@NotNull
-	private Currency currency;
+	private CurrencyEnum currency;
 
 	@NotNull
 	private BigDecimal interest;

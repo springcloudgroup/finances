@@ -2,14 +2,15 @@ package cn.zsk.statistics.entity.timeseries;
 
 
 
-import cn.zsk.statistics.entity.Currency;
-import cn.zsk.statistics.entity.TimePeriod;
+import cn.zsk.statistics.entity.CurrencyEnum;
+import cn.zsk.statistics.entity.ItemEntity;
+import cn.zsk.statistics.entity.TimePeriodEnum;
 
 import java.math.BigDecimal;
 
 /**
- * Represents normalized {@link cn.zsk.statistics.entity.Item} object
- * with {@link Currency#getBase()} currency and {@link TimePeriod#getBase()} time period
+ * Represents normalized {@link ItemEntity} object
+ * with {@link CurrencyEnum#getBase()} currency and {@link TimePeriodEnum#getBase()} time period
  */
 public class ItemMetric {
 

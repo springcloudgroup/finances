@@ -1,8 +1,8 @@
 package cn.zsk.notification.mapper;
 
-import cn.zsk.notification.entity.Recipient;
+import cn.zsk.notification.entity.RecipientEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ import java.util.List;
  * @CreateTime:2019-08-15 17:15
  */
 @Mapper
-public interface RecipientMapper {
+public interface RecipientMapper extends BaseMapper<RecipientEntity> {
 
-    Recipient findByAccountName(String name);
+    RecipientEntity findByAccountName(String name);
 
-    List<Recipient> findReadyForBackup();
+    List<RecipientEntity> findReadyForBackup();
 
-    List<Recipient> findReadyForRemind();
+    List<RecipientEntity> findReadyForRemind();
 
-    void save(Recipient recipient);
+    void save(RecipientEntity recipient);
 
 }

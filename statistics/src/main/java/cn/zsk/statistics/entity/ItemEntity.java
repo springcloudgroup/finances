@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
-public class Item {
+public class ItemEntity {
 
 	@NotNull
 	@Length(min = 1, max = 20)
@@ -17,9 +17,9 @@ public class Item {
 	private BigDecimal amount;
 
 	@NotNull
-	private Currency currency;
+	private CurrencyEnum currency;
 
 	@NotNull
-	private TimePeriod period;
+	private TimePeriodEnum period;
 
 }

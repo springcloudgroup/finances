@@ -14,7 +14,7 @@ import java.util.Map;
 public class ExchangeRatesContainer {
     private LocalDate date = LocalDate.now();
 
-    private Currency base;
+    private CurrencyEnum base;
 
     private Map<String, BigDecimal> rates;
 }

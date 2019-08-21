@@ -1,6 +1,6 @@
 package cn.zsk.statistics.client;
 
-import cn.zsk.statistics.entity.Currency;
+import cn.zsk.statistics.entity.CurrencyEnum;
 import cn.zsk.statistics.entity.ExchangeRatesContainer;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +14,9 @@ import java.util.Collections;
 public class ExchangeRatesClientFallback implements ExchangeRatesClient{
 
     @Override
-    public ExchangeRatesContainer getRates(cn.zsk.statistics.entity.Currency base) {
+    public ExchangeRatesContainer getRates(CurrencyEnum base) {
         ExchangeRatesContainer container = new ExchangeRatesContainer();
-        container.setBase(Currency.getBase());
+        container.setBase(CurrencyEnum.getBase());
         container.setRates(Collections.emptyMap());
         return container;
     }
