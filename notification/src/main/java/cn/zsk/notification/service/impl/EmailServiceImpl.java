@@ -1,8 +1,10 @@
 package cn.zsk.notification.service.impl;
 
+import cn.zsk.notification.entity.NotificationTypeEntity;
 import cn.zsk.notification.entity.NotificationTypeEnum;
 import cn.zsk.notification.entity.RecipientEntity;
 import cn.zsk.notification.service.EmailService;
+import cn.zsk.notification.service.NotificationTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +33,15 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private Environment env;
 
-	@Override
-	public void send(NotificationTypeEnum type, RecipientEntity recipient, String attachment) throws MessagingException, IOException {
+	@Autowired
+	private NotificationTypeService notificationTypeService;
 
-		final String subject = env.getProperty(type.getSubject());
-		final String text = MessageFormat.format(env.getProperty(type.getText()), recipient.getAccountName());
+	@Override
+	public void send(String type, RecipientEntity recipient, String attachment) throws MessagingException, IOException {
+		NotificationTypeEntity notificationTypeEntity = notificationTypeService.queryObjByType(type);
+
+		final String subject = env.getProperty(notificationTypeEntity.getSubject());
+		final String text = MessageFormat.format(env.getProperty(notificationTypeEntity.getText()), recipient.getAccountName());
 
 		MimeMessage message = mailSender.createMimeMessage();
 
@@ -45,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
 		helper.setText(text);
 
 		if (StringUtils.hasLength(attachment)) {
-			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes()));
+			helper.addAttachment(env.getProperty(notificationTypeEntity.getAttachment()), new ByteArrayResource(attachment.getBytes()));
 		}
 
 		mailSender.send(message);

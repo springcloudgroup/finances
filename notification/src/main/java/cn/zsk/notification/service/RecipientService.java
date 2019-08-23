@@ -2,6 +2,7 @@ package cn.zsk.notification.service;
 
 
 
+import cn.zsk.notification.entity.NotificationSettingsEntity;
 import cn.zsk.notification.entity.NotificationTypeEnum;
 import cn.zsk.notification.entity.RecipientEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -25,23 +26,20 @@ public interface RecipientService extends IService<RecipientEntity> {
 	 * @param type
 	 * @return recipients to notify
 	 */
-	List<RecipientEntity> findReadyToNotify(NotificationTypeEnum type);
+	List<RecipientEntity> findReadyToNotify(String type);
 
 	/**
 	 * Creates or updates recipient settings
 	 *
 	 * @param accountName
-	 * @param recipient
+	 * @param notificationSettings
 	 * @return updated recipient
 	 */
-	RecipientEntity save(String accountName, RecipientEntity recipient);
+	RecipientEntity save(String accountName,String notificationType, NotificationSettingsEntity notificationSettings);
 
 	/**
-	 * Updates {@link NotificationTypeEnum} {@code lastNotified} property with current date
-	 * for given recipient.
-	 *
-	 * @param type
+	 * @param notificationType
 	 * @param recipient
 	 */
-	void markNotified(NotificationTypeEnum type, RecipientEntity recipient);
+	void markNotified(String notificationType, RecipientEntity recipient);
 }

@@ -8,6 +8,6 @@ import java.io.IOException;
 
 public interface EmailService {
 
-	void send(NotificationTypeEnum type, RecipientEntity recipient, String attachment) throws MessagingException, IOException;
+	void send(String type, RecipientEntity recipient, String attachment) throws MessagingException, IOException;
 
 }

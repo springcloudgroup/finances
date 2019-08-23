@@ -17,6 +17,11 @@ public class NotificationSettingsServiceImpl extends ServiceImpl<NotificationSet
     private NotificationSettingsMapper notificationSettingsMapper;
 
     @Override
+    public NotificationSettingsEntity queryObjById(Integer id) {
+        return notificationSettingsMapper.selectById(id);
+    }
+
+    @Override
     public Integer insertEntity(NotificationSettingsEntity notificationSettingsEntity) {
         notificationSettingsMapper.insert(notificationSettingsEntity);
         return notificationSettingsEntity.getId();

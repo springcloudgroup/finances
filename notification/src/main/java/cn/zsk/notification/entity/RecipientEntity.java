@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.validation.Valid;
 import java.util.Map;
 
 @Data
@@ -18,22 +17,16 @@ public class RecipientEntity {
 	@TableField("email")
 	private String email;
 
-	@TableField("notification_type")
-	private String notificationType;
+	@TableField("notification_type_id")
+	private Integer notificationTypeId;
 
 	@TableField("notification_settings_id")
 	private Integer notificationSettingsId;
 
-	@Valid
-	private Map<NotificationTypeEnum, NotificationSettingsEntity> scheduledNotifications;
+	@TableField(exist = false)
+    private Map<NotificationTypeEntity,NotificationSettingsEntity> scheduledNotificationMap;
 
+	@TableField(exist = false)
+	private NotificationSettingsEntity notificationSettingsEntity;
 
-
-	@Override
-	public String toString() {
-		return "Recipient{" +
-				"accountName='" + accountName + '\'' +
-				", email='" + email + '\'' +
-				'}';
-	}
 }

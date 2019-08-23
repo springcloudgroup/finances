@@ -1,13 +1,14 @@
 package cn.zsk.notification.service.impl;
 
 import cn.zsk.notification.entity.NotificationSettingsEntity;
+import cn.zsk.notification.entity.NotificationTypeEntity;
 import cn.zsk.notification.entity.NotificationTypeEnum;
 import cn.zsk.notification.entity.RecipientEntity;
 import cn.zsk.notification.mapper.RecipientMapper;
 import cn.zsk.notification.service.NotificationSettingsService;
+import cn.zsk.notification.service.NotificationTypeService;
 import cn.zsk.notification.service.RecipientService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,40 +29,47 @@ public class RecipientServiceImpl extends ServiceImpl<RecipientMapper,RecipientE
 	@Autowired
 	private NotificationSettingsService notificationSettingsService;
 
+	@Autowired
+    private NotificationTypeService notificationTypeService;
+
 	@Override
 	public RecipientEntity findByAccountName(String accountName) {
 		Assert.hasLength(accountName);
 		RecipientEntity recipientEntity = recipientMapper.selectOne(new QueryWrapper<RecipientEntity>()
 				.eq("account_name",accountName));
-		NotificationSettingsEntity notificationSettingsEntity = notificationSettingsService.getOne(new QueryWrapper<NotificationSettingsEntity>()
-				.eq("id",recipientEntity.getNotificationSettingsId()));
-		Map<NotificationTypeEnum,NotificationSettingsEntity> map = new HashMap<>();
-//		map.put(recipientEntity.getNotificationType(),notificationSettingsEntity);
-//		recipientEntity.setScheduledNotifications();
-		return recipientMapper.findByAccountName(accountName);
+
+		NotificationSettingsEntity notificationSettingsEntity = notificationSettingsService.queryObjById(recipientEntity.getNotificationSettingsId());
+
+        NotificationTypeEntity notificationTypeEntity = notificationTypeService.queryObjById(recipientEntity.getNotificationTypeId());
+
+		Map<NotificationTypeEntity,NotificationSettingsEntity> map = new HashMap<>();
+		map.put(notificationTypeEntity,notificationSettingsEntity);
+		recipientEntity.setScheduledNotificationMap(map);
+		return recipientEntity;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RecipientEntity save(String accountName, RecipientEntity recipient) {
-
+	public RecipientEntity save(String accountName,String notificationType, NotificationSettingsEntity notificationSettingsEntity) {
+        RecipientEntity recipient = new RecipientEntity();
 		recipient.setAccountName(accountName);
-		recipient.getScheduledNotifications().values()
-				.forEach(settings -> {
-					if (settings.getLastNotified() == null) {
-						settings.setLastNotified(new Date());
-					}
-				});
-
-		List<NotificationSettingsEntity> notificationSettingsEntityList = new ArrayList<NotificationSettingsEntity>(recipient.getScheduledNotifications().values());
-		NotificationSettingsEntity notificationSettingsEntity = notificationSettingsEntityList.get(0);
+		if(null == notificationSettingsEntity.getLastNotified()){
+		    notificationSettingsEntity.setLastNotified(new Date());
+        }
 
 		recipient.setNotificationSettingsId(notificationSettingsService.insertEntity(notificationSettingsEntity));
 
+        NotificationTypeEntity notificationTypeEntity = notificationTypeService.queryObjByType(notificationType);
 
-		recipientMapper.save(recipient);
+		if(null != notificationTypeEntity){
+            recipient.setNotificationTypeId(notificationTypeEntity.getId());
+        }
+
+
+
+		recipientMapper.insert(recipient);
 
 		log.info("recipient {} settings has been updated", recipient);
 
@@ -72,11 +80,11 @@ public class RecipientServiceImpl extends ServiceImpl<RecipientMapper,RecipientE
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RecipientEntity> findReadyToNotify(NotificationTypeEnum type) {
+	public List<RecipientEntity> findReadyToNotify(String type) {
 		switch (type) {
-			case BACKUP:
+			case "backup":
 				return recipientMapper.findReadyForBackup();
-			case REMIND:
+			case "remind":
 				return recipientMapper.findReadyForRemind();
 			default:
 				throw new IllegalArgumentException();
@@ -87,17 +95,16 @@ public class RecipientServiceImpl extends ServiceImpl<RecipientMapper,RecipientE
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void markNotified(NotificationTypeEnum type, RecipientEntity recipient) {
-		recipient.getScheduledNotifications().get(type).setLastNotified(new Date());
+	public void markNotified(String notificationType, RecipientEntity recipient) {
 
-		List<NotificationSettingsEntity> notificationSettingsEntityList = new ArrayList<NotificationSettingsEntity>(recipient.getScheduledNotifications().values());
-		List<NotificationTypeEnum> notificationTypeEnumList = new ArrayList<NotificationTypeEnum>(recipient.getScheduledNotifications().keySet());
-		NotificationSettingsEntity notificationSettingsEntity = notificationSettingsEntityList.get(0);
-		NotificationTypeEnum notificationTypeEnum = notificationTypeEnumList.get(0);
+        NotificationTypeEntity notificationTypeEntity = notificationTypeService.queryObjByType(notificationType);
+
+        NotificationSettingsEntity notificationSettingsEntity = recipient.getNotificationSettingsEntity();
+        notificationSettingsEntity.setLastNotified(new Date());
 
 		recipient.setNotificationSettingsId(notificationSettingsService.insertEntity(notificationSettingsEntity));
-		recipient.setNotificationType(notificationTypeEnum.toString());
+		recipient.setNotificationTypeId(notificationTypeEntity.getId());
 
-		recipientMapper.save(recipient);
+		recipientMapper.insert(recipient);
 	}
 }

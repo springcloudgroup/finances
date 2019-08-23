@@ -13,12 +13,8 @@ import java.util.List;
 @Mapper
 public interface RecipientMapper extends BaseMapper<RecipientEntity> {
 
-    RecipientEntity findByAccountName(String name);
-
     List<RecipientEntity> findReadyForBackup();
 
     List<RecipientEntity> findReadyForRemind();
-
-    void save(RecipientEntity recipient);
 
 }

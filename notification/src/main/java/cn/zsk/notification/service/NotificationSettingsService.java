@@ -9,5 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface NotificationSettingsService extends IService<NotificationSettingsEntity> {
 
+    //通过id查询
+    NotificationSettingsEntity queryObjById(Integer id);
+
     Integer insertEntity(NotificationSettingsEntity notificationSettingsEntity);
 }

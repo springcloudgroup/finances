@@ -33,7 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
 	@Scheduled(cron = "${backup.cron}")
 	public void sendBackupNotifications() {
 
-		final NotificationTypeEnum type = NotificationTypeEnum.BACKUP;
+		final String type = "backup";
 
 		List<RecipientEntity> recipients = recipientService.findReadyToNotify(type);
 		log.info("found {} recipients for backup notification", recipients.size());
@@ -53,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
 	@Scheduled(cron = "${remind.cron}")
 	public void sendRemindNotifications() {
 
-		final NotificationTypeEnum type = NotificationTypeEnum.REMIND;
+		final String type = "remind";
 
 		List<RecipientEntity> recipients = recipientService.findReadyToNotify(type);
 		log.info("found {} recipients for remind notification", recipients.size());

@@ -1,5 +1,6 @@
 package cn.zsk.notification.controller;
 
+import cn.zsk.notification.entity.NotificationSettingsEntity;
 import cn.zsk.notification.entity.RecipientEntity;
 import cn.zsk.notification.service.RecipientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class RecipientController {
 	}
 
 	@RequestMapping(path = "/current", method = RequestMethod.PUT)
-	public Object saveCurrentNotificationsSettings(Principal principal, @Valid @RequestBody RecipientEntity recipient) {
-		return recipientService.save(principal.getName(), recipient);
+	public Object saveCurrentNotificationsSettings(Principal principal, String notificationType, NotificationSettingsEntity notificationSettings) {
+		return recipientService.save(principal.getName(),notificationType, notificationSettings);
 	}
 }
